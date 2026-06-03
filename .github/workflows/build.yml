@@ -1,0 +1,28 @@
+name: Android AArch64 Native Build
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Rust Toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install cross-rs
+        uses: taiki-e/install-action@cross
+
+      - name: Build for Android Terminal
+        run: cross build --target aarch64-linux-android --release
+
+      - name: Upload Binary Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: okx-neutral-bot-aarch64
+          path: target/aarch64-linux-android/release/okx-neutral-bot
