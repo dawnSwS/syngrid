@@ -1,0 +1,4 @@
+name = "syngrid-api-relay"
+main = "src/index.js"
+compatibility_date = "2024-06-25"
+

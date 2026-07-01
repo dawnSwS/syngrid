@@ -1,0 +1,26 @@
+name: Deploy Cloudflare Workers Relay
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'worker/**'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Deploy API Relay to Cloudflare
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: 'worker'
+          command: deploy
+
